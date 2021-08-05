@@ -16,4 +16,8 @@
     <style name="RoundImage">
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="SemiRoundImage">
+        <item name="cornerSize">25%</item>
+    </style>
 </resources>

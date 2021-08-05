@@ -16,12 +16,24 @@ class MoviesViewModel @Inject constructor(
     val dataState: MutableLiveData<DataState<Movies>>
         get() = _dataState
 
+    private val _movieDetails = MutableLiveData<DataState<Movie>>()
+    val movieDetails: MutableLiveData<DataState<Movie>>
+        get() = _movieDetails
+
 
     fun getMovies() {
         viewModelScope.launch {
             moviesRepository.getAllMovies()
                 .onEach { dataState ->
                     _dataState.value = dataState
+                }.launchIn(viewModelScope)
+        }
+    }
+    fun getMovieDetails(id: String) {
+        viewModelScope.launch {
+            moviesRepository.getMovie(id)
+                .onEach {
+                    _movieDetails.value = it
                 }.launchIn(viewModelScope)
         }
     }

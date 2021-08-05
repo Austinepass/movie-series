@@ -9,20 +9,19 @@
     android:orientation="vertical">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:src="@drawable/aus"
-        android:id="@+id/image_iv"
+        android:background="@color/shimmer_placeholder"        android:id="@+id/image_iv"
         app:shapeAppearanceOverlay="@style/RoundImage"
         android:layout_width="220dp"
         android:layout_height="200dp"/>
 
     <TextView
         android:layout_marginVertical="8dp"
-        tools:text="The Flash"
-        android:textColor="@color/black"
+        android:background="@color/shimmer_placeholder"
+        android:textColor="@color/shimmer_placeholder"
         android:textAlignment="center"
-        android:fontFamily="@font/alegreya_black"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:id="@+id/name_tv"
+        android:text="hkbdjnknvfnjvf.v"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal" />
