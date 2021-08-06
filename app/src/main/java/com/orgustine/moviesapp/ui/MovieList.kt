@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.orgustine.moviesapp.data.remote.DataState
 import com.orgustine.moviesapp.data.MoviesViewModel
@@ -26,7 +28,8 @@ class MovieList : Fragment(R.layout.fragment_movie_list), OnItemClickListener {
         viewModel.getMovies()
         subscribe()
         binding.list.apply {
-            layoutManager = GridLayoutManager(requireContext(), 2)
+            //layoutManager = GridLayoutManager(requireContext(), 2)
+            layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
             adapter = moviesAdapter
         }
 
@@ -39,19 +42,17 @@ class MovieList : Fragment(R.layout.fragment_movie_list), OnItemClickListener {
                     Snackbar.make(
                         requireView(), "Loading...", Snackbar.LENGTH_LONG
                     ).show()
-                    binding.shimmerLayout.startShimmer()
                 }
                 is DataState.Error -> Snackbar.make(
                     requireView(),
                     "Error: ${dataState.exception.localizedMessage}",
-                    Snackbar.LENGTH_LONG
-                ).show()
+                    Snackbar.LENGTH_INDEFINITE
+                ).setAction("Retry") { viewModel.getMovies() }
+                    .show()
                 is DataState.Success -> {
                     moviesAdapter.submitList(dataState.data.tv_shows)
-                    binding.shimmerLayout.stopShimmer()
-                    binding.shimmerLayout.visibility = View.GONE
+                    binding.progress.visibility = View.GONE
                     binding.list.visibility = View.VISIBLE;
-                    Log.i("Movies", dataState.data.toString())
                 }
             }
         })
